@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WWD — Winning Website Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1B3E;
+    --blue: #1040A0;
+    --yellow: #FFD600;
+    --yellow-dark: #E6BE00;
+    --white: #F5F7FF;
+    --grey: #8A94B0;
+    --light: #EEF1FA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: rgba(11,27,62,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,214,0,0.15);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+  }
+
+  .logo span { color: var(--yellow); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--grey);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--yellow); }
+
+  .nav-cta {
+    background: var(--yellow) !important;
+    color: var(--navy) !important;
+    padding: 10px 22px;
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--yellow-dark) !important; color: var(--navy) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 22vw, 340px);
+    color: rgba(16, 64, 160, 0.18);
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    pointer-events: none;
+    user-select: none;
+    animation: drift 12s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    from { transform: translate(-52%, -50%) }
+    to   { transform: translate(-48%, -50%) }
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 9vw, 130px);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--yellow);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 36px;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(245,247,255,0.65);
+    max-width: 500px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-actions {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--yellow-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--yellow); border-color: var(--yellow); }
+
+  .hero-price-badge {
+    position: absolute;
+    right: 80px;
+    bottom: 120px;
+    background: var(--yellow);
+    color: var(--navy);
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: spin-slow 20s linear infinite;
+  }
+
+  .hero-price-badge .from { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+  .hero-price-badge .price { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; line-height: 1; }
+  .hero-price-badge .note { font-size: 0.62rem; font-weight: 600; opacity: 0.7; }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg) }
+    to   { transform: rotate(360deg) }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--yellow);
+    color: var(--navy);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .ticker-inner span { margin: 0 40px; }
+  .ticker-inner .dot { color: var(--blue); }
+
+  @keyframes ticker {
+    from { transform: translateX(0) }
+    to   { transform: translateX(-50%) }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--yellow);
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+
+  /* ── PROBLEM ── */
+  .problem {
+    background: var(--blue);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .problem-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 12vw, 160px);
+    color: var(--yellow);
+    line-height: 1;
+    display: block;
+  }
+
+  .problem-stat-text {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,247,255,0.7);
+    max-width: 320px;
+    line-height: 1.7;
+    margin-top: 8px;
+  }
+
+  .problem p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,247,255,0.8);
+    margin-bottom: 20px;
+  }
+
+  .problem strong { color: var(--yellow); font-weight: 600; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--navy); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .service-card {
+    background: var(--navy);
+    padding: 48px 36px;
+    border: 1px solid rgba(255,214,0,0.08);
+    transition: background 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-card:hover { background: rgba(16,64,160,0.25); border-color: rgba(255,214,0,0.2); }
+
+  .service-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--yellow);
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+    opacity: 0.7;
+  }
+
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(245,247,255,0.6);
+    line-height: 1.7;
+  }
+
+  /* ── PROCESS ── */
+  .process { background: #07112A; }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 64px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+  }
+
+  .process-step { padding: 0 24px; text-align: center; }
+
+  .step-num {
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--yellow);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--yellow);
+    margin: 0 auto 28px;
+    background: #07112A;
+    position: relative;
+    z-index: 2;
+  }
+
+  .process-step h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+
+  .process-step p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(245,247,255,0.55);
+    line-height: 1.65;
+  }
+
+  /* ── DEMOS ── */
+  .demos { background: var(--navy); }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .demo-card {
+    border: 1px solid rgba(255,214,0,0.12);
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .demo-card:hover { transform: translateY(-6px); border-color: var(--yellow); }
+
+  .demo-thumb {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .demo-thumb.removals { background: linear-gradient(135deg, #1040A0, #0B1B3E); color: var(--yellow); }
+  .demo-thumb.handyman { background: linear-gradient(135deg, #2A1A00, #5A3800); color: #FFA500; }
+  .demo-thumb.landscape { background: linear-gradient(135deg, #0D2B0D, #1A5C1A); color: #7CFC00; }
+
+  .demo-thumb-icon { font-size: 3.5rem; display: block; margin-bottom: 8px; }
+
+  .demo-info { padding: 24px; background: rgba(255,255,255,0.03); }
+  .demo-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .demo-info p { font-size: 0.82rem; color: var(--grey); font-weight: 300; }
+
+  .demo-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    border: 1px solid rgba(255,214,0,0.3);
+    padding: 3px 10px;
+    margin-top: 12px;
+  }
+
+  /* ── PRICING ── */
+  .pricing {
+    background: var(--blue);
+    text-align: center;
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pricing-card {
+    background: rgba(11,27,62,0.6);
+    border: 1px solid rgba(255,214,0,0.15);
+    padding: 40px 28px;
+    text-align: left;
+    transition: border-color 0.3s;
+  }
+
+  .pricing-card.featured {
+    background: var(--yellow);
+    color: var(--navy);
+    border-color: transparent;
+  }
+
+  .pricing-card.featured .price-amount { color: var(--navy); }
+  .pricing-card.featured .price-tag { color: rgba(11,27,62,0.6); }
+  .pricing-card.featured ul li { color: var(--navy); }
+  .pricing-card.featured .plan-name { color: var(--navy); }
+
+  .plan-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 20px;
+  }
+
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .price-tag {
+    font-size: 0.78rem;
+    color: var(--grey);
+    margin-bottom: 28px;
+    display: block;
+  }
+
+  .pricing-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pricing-card ul li {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(245,247,255,0.75);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .pricing-card ul li::before { content: '✓'; color: var(--yellow); font-weight: 700; flex-shrink: 0; }
+  .pricing-card.featured ul li::before { color: var(--navy); }
+
+  /* ── CONTACT ── */
+  .contact { background: var(--navy); }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,247,255,0.65);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--grey);
+  }
+
+  .contact-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255,214,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,214,0,0.15);
+    color: var(--white);
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus { border-color: var(--yellow); }
+
+  .contact-form textarea { min-height: 120px; resize: vertical; }
+
+  .contact-form select option { background: var(--navy); }
+
+  .contact-form ::placeholder { color: var(--grey); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050E1F;
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,214,0,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-logo span { color: var(--yellow); }
+
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--yellow); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    section { padding: 70px 24px; }
+    .hero { padding: 120px 24px 60px; }
+    .hero-price-badge { display: none; }
+    .problem, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid, .demo-grid, .pricing-cards, .process-steps { grid-template-columns: 1fr; }
+    .process-steps::before { display: none; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">WW<span>D</span></div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#demos">Examples</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Preview</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">WWD</div>
+  <div class="hero-tag">Winning Website Designs · Garden Route & Beyond</div>
+  <h1>Your business<em>deserves to be found.</em></h1>
+  <p class="hero-sub">You're already on Google Maps. Your customers are already looking. You just need to give them somewhere to land.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">See My Preview →</a>
+    <a href="#demos" class="btn-ghost">View Examples</a>
+  </div>
+  <div class="hero-price-badge">
+    <span class="from">Starting at</span>
+    <span class="price">R5K</span>
+    <span class="note">Once-off · You own it</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Furniture Removals</span><span class="dot">◆</span>
+    <span>Handyman Services</span><span class="dot">◆</span>
+    <span>Landscaping</span><span class="dot">◆</span>
+    <span>Plumbers</span><span class="dot">◆</span>
+    <span>Electricians</span><span class="dot">◆</span>
+    <span>Caterers</span><span class="dot">◆</span>
+    <span>Guest Houses</span><span class="dot">◆</span>
+    <span>Motor Mechanics</span><span class="dot">◆</span>
+    <span>Furniture Removals</span><span class="dot">◆</span>
+    <span>Handyman Services</span><span class="dot">◆</span>
+    <span>Landscaping</span><span class="dot">◆</span>
+    <span>Plumbers</span><span class="dot">◆</span>
+    <span>Electricians</span><span class="dot">◆</span>
+    <span>Caterers</span><span class="dot">◆</span>
+    <span>Guest Houses</span><span class="dot">◆</span>
+    <span>Motor Mechanics</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem reveal" id="problem">
+  <div>
+    <span class="problem-stat">76%</span>
+    <p class="problem-stat-text">of customers check online before making contact — even for a local tradesman.</p>
+  </div>
+  <div>
+    <div class="section-label">The Problem</div>
+    <h2>You're invisible online.</h2>
+    <p>You've built a real business. You have happy customers. But when someone types <strong>"furniture removals near me"</strong> or <strong>"handyman [your town]"</strong> — you're not there.</p>
+    <p>Your competitor with a R5,000 website is getting that call instead. Not because they're better. Because they showed up and you didn't.</p>
+    <p>You needed this <strong>five years ago</strong>. We can get it to you now — at five years ago's prices.</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services reveal" id="services">
+  <div class="section-label">What We Do</div>
+  <h2>Fast. Affordable. Yours.</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>One-Page Website</h3>
+      <p>Professional, mobile-friendly, fast-loading. Built to convert visitors into calls. Done in days, not weeks.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Custom Preview First</h3>
+      <p>Before you spend a cent, we build a preview of your actual website. See it, love it, then decide. No risk.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>You Own It</h3>
+      <p>No monthly agency fees. No lock-in. We hand you the keys. Host it yourself from R50/month on domains.co.za.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Google Ready</h3>
+      <p>Linked to your Google Business Profile. Structured for local search. The customers looking for you will find you.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3>WhatsApp Integration</h3>
+      <p>One tap to WhatsApp you directly from the site. The way SA customers actually want to get in touch.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3>Ongoing Support</h3>
+      <p>Need updates? New photos? Additional pages? We're available at R250/hour — no retainer, no contracts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process reveal" id="process">
+  <div class="section-label">How It Works</div>
+  <h2>Four steps to online.</h2>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <h3>You Reply</h3>
+      <p>Send us a message expressing interest. That's all we need to get started.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <h3>We Preview</h3>
+      <p>Within 24 hours, you receive a preview of your potential website. Real design, your business.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <h3>You Approve</h3>
+      <p>Love it? We finalise, you pay R5,000, and we go live. Simple as that.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">4</div>
+      <h3>You're Live</h3>
+      <p>Your website is published. You own the files. Customers can find you from day one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEMOS -->
+<section class="demos reveal" id="demos">
+  <div class="section-label">Example Websites</div>
+  <h2>Built for SA businesses.</h2>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <div class="demo-thumb removals">
+        <div style="text-align:center">
+          <span class="demo-thumb-icon">🚚</span>
+          Removals Co.
+        </div>
+      </div>
+      <div class="demo-info">
+        <h3>Furniture Removals</h3>
+        <p>Trust-led design with quote CTA, service areas, and GIT insurance info built in.</p>
+        <span class="demo-tag">View Example →</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-thumb handyman">
+        <div style="text-align:center">
+          <span class="demo-thumb-icon">🔧</span>
+          Handyman Pro
+        </div>
+      </div>
+      <div class="demo-info">
+        <h3>Handyman Services</h3>
+        <p>Walls, gates, steel work — a tough, credible look with service list and contact form.</p>
+        <span class="demo-tag">View Example →</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-thumb landscape">
+        <div style="text-align:center">
+          <span class="demo-thumb-icon">🌿</span>
+          Green Spaces
+        </div>
+      </div>
+      <div class="demo-info">
+        <h3>Landscaping</h3>
+        <p>Portfolio-led with project gallery, before/after photos, and easy quote request.</p>
+        <span class="demo-tag">View Example →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing reveal" id="pricing">
+  <div class="section-label">Pricing</div>
+  <h2>No surprises. Ever.</h2>
+  <div class="pricing-cards">
+    <div class="pricing-card">
+      <div class="plan-name">Starter</div>
+      <div class="price-amount">R5,000</div>
+      <span class="price-tag">Once-off · No monthly fees</span>
+      <ul>
+        <li>Professional one-page website</li>
+        <li>Mobile responsive</li>
+        <li>WhatsApp button</li>
+        <li>Google Maps link</li>
+        <li>Contact form</li>
+        <li>You own the files</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured">
+      <div class="plan-name">Most Popular</div>
+      <div class="price-amount">R7,500</div>
+      <span class="price-tag">Once-off · Best value</span>
+      <ul>
+        <li>Everything in Starter</li>
+        <li>3-page website</li>
+        <li>Photo gallery</li>
+        <li>Google Business setup</li>
+        <li>Basic SEO</li>
+        <li>2hrs post-launch support</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Full Package</div>
+      <div class="price-amount">R12,000</div>
+      <span class="price-tag">Once-off · Full presence</span>
+      <ul>
+        <li>Everything in Popular</li>
+        <li>Up to 6 pages</li>
+        <li>Portfolio / case studies</li>
+        <li>Online quote request form</li>
+        <li>Social media links</li>
+        <li>4hrs post-launch support</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact reveal" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-label">Get Your Preview</div>
+      <h2>See it before you buy it.</h2>
+      <p>Send us your business name and we'll build a preview of your website — free, no obligation, ready within 24 hours. If you love it, we build the real thing.</p>
+      <div class="contact-detail">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          info.wwd40@gmail.com
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          WhatsApp us anytime
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          Garden Route · Growing across South Africa
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-form">
+        <input type="text" placeholder="Your name">
+        <input type="text" placeholder="Business name">
+        <input type="tel" placeholder="Phone / WhatsApp number">
+        <input type="email" placeholder="Email address">
+        <select>
+          <option value="" disabled selected>What type of business?</option>
+          <option>Furniture Removals</option>
+          <option>Handyman / Building</option>
+          <option>Landscaping / Garden</option>
+          <option>Plumbing / Electrical</option>
+          <option>Food / Catering</option>
+          <option>Accommodation</option>
+          <option>Other</option>
+        </select>
+        <textarea placeholder="Tell us a bit about your business (optional)"></textarea>
+        <button class="btn-primary" onclick="handleSubmit(event)">Send Me My Preview →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">WW<span>D</span></div>
+  <p>© 2026 Winning Website Designs · Garden Route, SA</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target;
+    btn.textContent = '✓ Request Received — We\'ll be in touch!';
+    btn.style.background = '#1A5C1A';
+    btn.style.color = '#7CFC00';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
